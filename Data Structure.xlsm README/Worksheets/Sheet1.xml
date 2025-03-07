@@ -15,6 +15,9 @@
    <Protection/>
   </Style>
  </Styles>
+ <Names>
+  <NamedRange ss:Name="_xleta.RANDBETWEEN" ss:RefersTo="=#NAME?" ss:Hidden="1"/>
+ </Names>
  <Worksheet ss:Name="Sheet1">
   <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1"
    ss:DefaultRowHeight="14.5"/>

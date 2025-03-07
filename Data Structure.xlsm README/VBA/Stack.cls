@@ -96,17 +96,17 @@ Public Function ToArray() As Variant()
     End If
 
     Dim Result() As Variant
-    Dim I As Long
+    Dim i As Long
     
     ReDim Result(1 To StackCollection.Count, 1 To 1)
     
-    For I = 1 To StackCollection.Count
-        If IsObject(StackCollection(I)) Then
-            Set Result(I, 1) = StackCollection(I)
+    For i = 1 To StackCollection.Count
+        If IsObject(StackCollection(i)) Then
+            Set Result(i, 1) = StackCollection(i)
         Else
-            Result(I, 1) = StackCollection(I)
+            Result(i, 1) = StackCollection(i)
         End If
-    Next I
+    Next i
     
     ToArray = Result
 
@@ -124,16 +124,16 @@ Public Function ToVector() As Variant()
     End If
     
     Dim Result() As Variant
-    Dim I As Long
+    Dim i As Long
     ReDim Result(1 To StackCollection.Count)
     
-    For I = 1 To StackCollection.Count
-        If IsObject(StackCollection(I)) Then
-            Set Result(I) = StackCollection(I)
+    For i = 1 To StackCollection.Count
+        If IsObject(StackCollection(i)) Then
+            Set Result(i) = StackCollection(i)
         Else
-            Result(I) = StackCollection(I)
+            Result(i) = StackCollection(i)
         End If
-    Next I
+    Next i
     
     ToVector = Result
 

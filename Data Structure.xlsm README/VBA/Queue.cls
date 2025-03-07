@@ -96,17 +96,17 @@ Public Function ToArray() As Variant()
     End If
 
     Dim Result() As Variant
-    Dim I As Long
+    Dim i As Long
     
     ReDim Result(1 To QueueCollection.Count, 1 To 1)
     
-    For I = 1 To QueueCollection.Count
-        If IsObject(QueueCollection(I)) Then
-            Set Result(I, 1) = QueueCollection(I)
+    For i = 1 To QueueCollection.Count
+        If IsObject(QueueCollection(i)) Then
+            Set Result(i, 1) = QueueCollection(i)
         Else
-            Result(I, 1) = QueueCollection(I)
+            Result(i, 1) = QueueCollection(i)
         End If
-    Next I
+    Next i
     
     ToArray = Result
 
@@ -124,16 +124,16 @@ Public Function ToVector() As Variant()
     End If
     
     Dim Result() As Variant
-    Dim I As Long
+    Dim i As Long
     ReDim Result(1 To QueueCollection.Count)
     
-    For I = 1 To QueueCollection.Count
-        If IsObject(QueueCollection(I)) Then
-            Set Result(I) = QueueCollection(I)
+    For i = 1 To QueueCollection.Count
+        If IsObject(QueueCollection(i)) Then
+            Set Result(i) = QueueCollection(i)
         Else
-            Result(I) = QueueCollection(I)
+            Result(i) = QueueCollection(i)
         End If
-    Next I
+    Next i
     
     ToVector = Result
 
