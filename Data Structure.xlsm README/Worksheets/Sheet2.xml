@@ -22,22 +22,9 @@
   <NamedRange ss:Name="_xleta.RANDBETWEEN" ss:RefersTo="=#NAME?" ss:Hidden="1"/>
  </Names>
  <Worksheet ss:Name="PriorityQueue">
-  <Table ss:ExpandedColumnCount="10" ss:ExpandedRowCount="14"
+  <Table ss:ExpandedColumnCount="10" ss:ExpandedRowCount="12"
    ss:DefaultRowHeight="14.5">
    <Row>
-    <Cell ss:ArrayRange="RC:RC[9]" ss:Formula="=RANDARRAY(1,10,1,100,TRUE)"><Data
-      ss:Type="Number">72</Data></Cell>
-    <Cell><Data ss:Type="Number">81</Data></Cell>
-    <Cell><Data ss:Type="Number">73</Data></Cell>
-    <Cell><Data ss:Type="Number">40</Data></Cell>
-    <Cell><Data ss:Type="Number">64</Data></Cell>
-    <Cell><Data ss:Type="Number">88</Data></Cell>
-    <Cell><Data ss:Type="Number">69</Data></Cell>
-    <Cell><Data ss:Type="Number">2</Data></Cell>
-    <Cell><Data ss:Type="Number">88</Data></Cell>
-    <Cell><Data ss:Type="Number">59</Data></Cell>
-   </Row>
-   <Row ss:Index="3">
     <Cell ss:StyleID="s16"><Data ss:Type="Number">82</Data></Cell>
     <Cell><Data ss:Type="Number">54</Data></Cell>
     <Cell><Data ss:Type="Number">18</Data></Cell>
@@ -49,56 +36,69 @@
     <Cell><Data ss:Type="Number">20</Data></Cell>
     <Cell><Data ss:Type="Number">79</Data></Cell>
    </Row>
-   <Row ss:Index="5">
+   <Row ss:Index="3">
     <Cell><Data ss:Type="Number">100</Data></Cell>
     <Cell ss:Index="3" ss:ArrayRange="RC:R[9]C"
      ss:Formula="=SORT(TOCOL(R[-2]C[-2]:R[-2]C[7]),,-1)"><Data ss:Type="Number">100</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">17</Data></Cell>
+    <Cell ss:ArrayRange="RC:R[9]C" ss:Formula="=SEQUENCE(ROWS(RC[-1]#))"><Data
+      ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Number">17</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">90</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">90</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="Number">18</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">82</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">82</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="Number">20</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">79</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">79</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell ss:Index="8" ss:Formula="=LARGE(R[-5]C[-7]:R[-5]C[2],3)"><Data
+      ss:Type="Number">82</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">54</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">54</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">42</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="Number">42</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">42</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">42</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">54</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="Number">54</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">29</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">29</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">79</Data></Cell>
+    <Cell><Data ss:Type="Number">7</Data></Cell>
+    <Cell><Data ss:Type="Number">79</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">20</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">20</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">82</Data></Cell>
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell><Data ss:Type="Number">82</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">18</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">18</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">90</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="Number">90</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">17</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="Number">17</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="Number">100</Data></Cell>
+    <Cell><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="Number">100</Data></Cell>
    </Row>
   </Table>
  </Worksheet>
