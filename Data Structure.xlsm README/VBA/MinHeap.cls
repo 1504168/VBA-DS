@@ -2,27 +2,27 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "MaxHeap"
+Attribute VB_Name = "MinHeap"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-' MaxHeap is a Complete Binary Tree (CBT).
-' Any node priority is largest among all its descendant nodes.
+' MinHeap is a Complete Binary Tree (CBT).
+' Any node priority is smallest among all its descendant nodes.
 ' In 1 based index if i is the node index then:
 ' Parent node will be in (i/2)~=lowest integer index.
 ' Left child will be in 2*i index.
 ' Right child will be in 2*i+1 index.
-' First item will always have the highest priority. Pop will be only done on the first index.
+' First item will always have the lowest priority. Pop will be only done on the first index.
 
 
 Implements IHeap
 
 Private Const BUFFER_SIZE As Long = 32
 
-Private Type TMaxHeap
+Private Type TMinHeap
     ValueRowIndex As Long
     InsertionRowIndex As Long
     PriorityRowIndex As Long
@@ -31,7 +31,8 @@ Private Type TMaxHeap
     AreValueAndPrioritySame As Boolean
     BufferSize As Long
 End Type
-Private this As TMaxHeap
+
+Private this As TMinHeap
 
 Public Property Get BufferSize() As Long
     BufferSize = this.BufferSize
@@ -110,14 +111,14 @@ End Property
 
 Private Sub IHeap_FromVector(ByVal ItemVector As Variant, Optional ByVal PriorityVector As Variant)
     
-    ' This will create a MaxHeap structure in O(n) Time complexity. This process is called heapify.
+    ' This will create a MinHeap structure in O(n) Time complexity.
     ' Ref: https://www.geeksforgeeks.org/building-heap-from-array.
     
     ' This may not keep the same order as you would get if you add one item from left -> right.
     ' for example if the initial ItemVector = [82,54,18,42,17,29,100,90,20,79]
-    ' then this will return :   [100, 90, 82, 54, 79, 29, 18, 42, 20, 17]
-    ' Where as if you add then: [100, 90, 82, 54, 79, 18, 29, 42, 20, 17]
-    ' so index 6 and 7 has different order.
+    ' then this will return :   [17, 20, 18, 42, 54, 29, 100, 90, 82, 79]
+    ' Where as if you add then: [17, 18, 29, 20, 42, 54, 100, 90, 82, 79]
+    ' so index 2-6 has different order.
     
     this.ItemCount = UBound(ItemVector) - LBound(ItemVector) + 1
     ReDim this.Container(this.InsertionRowIndex To this.PriorityRowIndex, 1 To this.ItemCount)
@@ -154,7 +155,7 @@ Private Function IHeap_Sort(ByVal ItemsToSortVector As Variant _
     
     ' First add all the item to the heap using FromVector (Heapify)
     ' Time complexity of that is O(n)
-    ' And then for each node remove from the heap. And one each removal it takes O(logn) for rearrangement.
+    ' And then for each node remove from the heap. And one each removal it takes O(logn) for re-arrangement.
     ' So total time complexity if O(n)+ O(n logn)
     
     
@@ -178,15 +179,15 @@ Private Function IHeap_Sort(ByVal ItemsToSortVector As Variant _
         
         If IsAscending Then
             If IsObject(CurrentItem) Then
-                Set Result(TotalItems - Counter + 1, 1) = CurrentItem
-            Else
-                Result(TotalItems - Counter + 1, 1) = CurrentItem
-            End If
-        Else
-            If IsObject(CurrentItem) Then
                 Set Result(Counter, 1) = CurrentItem
             Else
                 Result(Counter, 1) = CurrentItem
+            End If
+        Else
+            If IsObject(CurrentItem) Then
+                Set Result(TotalItems - Counter + 1, 1) = CurrentItem
+            Else
+                Result(TotalItems - Counter + 1, 1) = CurrentItem
             End If
         End If
         
@@ -287,7 +288,7 @@ Private Sub ShiftUp(ByVal ChildIndex As Long, ByVal ParentIndex As Long)
         Dim ChildPriority As Variant
         ChildPriority = this.Container(this.PriorityRowIndex, ChildIndex)
         
-        If IsSecondOneHasHighPriority(ParentIndex, ChildIndex) Then
+        If IsSecondOneHasLowPriority(ParentIndex, ChildIndex) Then
             Swap ParentIndex, ChildIndex
             ChildIndex = ParentIndex
             ParentIndex = Int(ChildIndex / 2)
@@ -299,7 +300,7 @@ Private Sub ShiftUp(ByVal ChildIndex As Long, ByVal ParentIndex As Long)
     
 End Sub
 
-Private Function IsSecondOneHasHighPriority(ByVal FirstOneIndex, ByVal SecondOneIndex As Long) As Boolean
+Private Function IsSecondOneHasLowPriority(ByVal FirstOneIndex, ByVal SecondOneIndex As Long) As Boolean
     
     Dim FirstOnePriority As Variant
     FirstOnePriority = this.Container(this.PriorityRowIndex, FirstOneIndex)
@@ -307,8 +308,8 @@ Private Function IsSecondOneHasHighPriority(ByVal FirstOneIndex, ByVal SecondOne
     Dim SecondOnePriority As Variant
     SecondOnePriority = this.Container(this.PriorityRowIndex, SecondOneIndex)
     
-    Dim IsHighPriority As Boolean
-    IsHighPriority = False
+    Dim IsLowPriority As Boolean
+    IsLowPriority = False
     Dim IsEqualPriority As Boolean
     IsEqualPriority = True
     
@@ -316,27 +317,28 @@ Private Function IsSecondOneHasHighPriority(ByVal FirstOneIndex, ByVal SecondOne
             
         Dim Index As Long
         For Index = LBound(FirstOnePriority) To UBound(FirstOnePriority)
-            If FirstOnePriority(Index) < SecondOnePriority(Index) Then
-                IsHighPriority = True
+            If FirstOnePriority(Index) > SecondOnePriority(Index) Then
+                IsLowPriority = True
                 IsEqualPriority = False
                 Exit For
-            ElseIf FirstOnePriority(Index) > SecondOnePriority(Index) Then
-                IsHighPriority = False
+            ElseIf FirstOnePriority(Index) < SecondOnePriority(Index) Then
+                IsLowPriority = False
                 IsEqualPriority = False
                 Exit For
             End If
         Next Index
             
     Else
-        IsHighPriority = (FirstOnePriority < SecondOnePriority)
+        IsLowPriority = (FirstOnePriority > SecondOnePriority)
         IsEqualPriority = (FirstOnePriority = SecondOnePriority)
     End If
     
     If IsEqualPriority Then
-        IsHighPriority = (this.Container(this.InsertionRowIndex, FirstOneIndex) > this.Container(this.InsertionRowIndex, SecondOneIndex))
+        ' Priorities based on insertion order. FIFO idea.
+        IsLowPriority = (this.Container(this.InsertionRowIndex, FirstOneIndex) > this.Container(this.InsertionRowIndex, SecondOneIndex))
     End If
     
-    IsSecondOneHasHighPriority = IsHighPriority
+    IsSecondOneHasLowPriority = IsLowPriority
     
 End Function
 
@@ -367,14 +369,14 @@ End Sub
 '@Recursive method.
 Private Sub ShiftDown(ByVal ParentIndex As Long)
     
-    ' Start with parent and check if left or right has high priority. Swap parent with that item
+    ' Start with parent and check if left or right has low priority. Swap parent with that item
     ' index and then consider that child as parent index again. Keep doing this for all children node.
     ' Worst time complexity is: O(logn)
     
     If ParentIndex * 2 > this.ItemCount Then Exit Sub
     
-    Dim HighPriorityIndex As Long
-    HighPriorityIndex = ParentIndex
+    Dim LowPriorityIndex As Long
+    LowPriorityIndex = ParentIndex
     
     Dim LeftChildIndex As Long
     LeftChildIndex = 2 * ParentIndex
@@ -382,27 +384,27 @@ Private Sub ShiftDown(ByVal ParentIndex As Long)
     Dim RightChildIndex As Long
     RightChildIndex = LeftChildIndex + 1
     
-    ' Initially HighPriorityIndex is at the parent. Check if Left child has high priority or not
+    ' Initially LowPriorityIndex is at the parent. Check if Left child has low priority or not
     If LeftChildIndex <= this.ItemCount Then
         
-        If IsSecondOneHasHighPriority(HighPriorityIndex, LeftChildIndex) Then
-            HighPriorityIndex = LeftChildIndex
+        If IsSecondOneHasLowPriority(LowPriorityIndex, LeftChildIndex) Then
+            LowPriorityIndex = LeftChildIndex
         End If
         
     End If
     
-    ' If left node has high priority then HighPriorityIndex would have been updated with LeftChildIndex.
+    ' If left node has low priority then LowPriorityIndex would have been updated with LeftChildIndex.
     ' Now compare LeftChildIndex with Right one or with parent with right one.
     If RightChildIndex <= this.ItemCount Then
-        If IsSecondOneHasHighPriority(HighPriorityIndex, RightChildIndex) Then
-            HighPriorityIndex = RightChildIndex
+        If IsSecondOneHasLowPriority(LowPriorityIndex, RightChildIndex) Then
+            LowPriorityIndex = RightChildIndex
         End If
     End If
     
-    If HighPriorityIndex <> ParentIndex Then
-        ' Swap parent index with HighPriorityIndex and call recursively for the HighPriorityIndex one
-        Swap ParentIndex, HighPriorityIndex
-        ShiftDown HighPriorityIndex
+    If LowPriorityIndex <> ParentIndex Then
+        ' Swap parent index with LowPriorityIndex and call recursively for the LowPriorityIndex one
+        Swap ParentIndex, LowPriorityIndex
+        ShiftDown LowPriorityIndex
     End If
     
 End Sub
