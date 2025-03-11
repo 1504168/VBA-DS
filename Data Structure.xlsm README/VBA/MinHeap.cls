@@ -32,72 +32,72 @@ Private Type TMinHeap
     BufferSize As Long
 End Type
 
-Private this As TMinHeap
+Private This As TMinHeap
 
 Public Property Get BufferSize() As Long
-    BufferSize = this.BufferSize
+    BufferSize = This.BufferSize
 End Property
 
 Public Property Let BufferSize(ByVal RHS As Long)
     
-    If this.ItemCount > 0 Then
+    If This.ItemCount > 0 Then
         Err.Raise 13, "Heap is not empty."
     End If
     
-    this.BufferSize = RHS
+    This.BufferSize = RHS
     
-    Erase this.Container
-    ReDim this.Container(this.InsertionRowIndex To this.PriorityRowIndex, 1 To this.BufferSize)
+    Erase This.Container
+    ReDim This.Container(This.InsertionRowIndex To This.PriorityRowIndex, 1 To This.BufferSize)
     
 End Property
 
 Public Property Get AreValueAndPrioritySame() As Boolean
-    AreValueAndPrioritySame = this.AreValueAndPrioritySame
+    AreValueAndPrioritySame = This.AreValueAndPrioritySame
 End Property
 
 Public Property Let AreValueAndPrioritySame(ByVal RHS As Boolean)
     
-    If this.ItemCount > 0 Then
+    If This.ItemCount > 0 Then
         Err.Raise 13, "Heap is not empty."
     End If
     
-    this.AreValueAndPrioritySame = RHS
+    This.AreValueAndPrioritySame = RHS
     
-    If this.AreValueAndPrioritySame Then
-        this.PriorityRowIndex = 2
+    If This.AreValueAndPrioritySame Then
+        This.PriorityRowIndex = 2
     Else
-        this.PriorityRowIndex = 3
+        This.PriorityRowIndex = 3
     End If
     
-    Erase this.Container
-    ReDim this.Container(this.InsertionRowIndex To this.PriorityRowIndex, 1 To this.BufferSize)
+    Erase This.Container
+    ReDim This.Container(This.InsertionRowIndex To This.PriorityRowIndex, 1 To This.BufferSize)
     
 End Property
 
 Private Sub Class_Initialize()
     
     ' Default behaviour is that value and priority are different.
-    this.ItemCount = 0
-    this.InsertionRowIndex = 1
-    this.ValueRowIndex = 2
-    this.PriorityRowIndex = 3
-    this.AreValueAndPrioritySame = False
-    this.BufferSize = BUFFER_SIZE
+    This.ItemCount = 0
+    This.InsertionRowIndex = 1
+    This.ValueRowIndex = 2
+    This.PriorityRowIndex = 3
+    This.AreValueAndPrioritySame = False
+    This.BufferSize = BUFFER_SIZE
     
-    ReDim this.Container(this.InsertionRowIndex To this.PriorityRowIndex, 1 To this.BufferSize)
+    ReDim This.Container(This.InsertionRowIndex To This.PriorityRowIndex, 1 To This.BufferSize)
     
 End Sub
 
 Private Sub Class_Terminate()
     
     ' Reset to default.
-    this.ItemCount = 0
-    this.InsertionRowIndex = -1
-    this.ValueRowIndex = -1
-    this.PriorityRowIndex = -1
-    this.AreValueAndPrioritySame = False
-    this.BufferSize = BUFFER_SIZE
-    Erase this.Container
+    This.ItemCount = 0
+    This.InsertionRowIndex = -1
+    This.ValueRowIndex = -1
+    This.PriorityRowIndex = -1
+    This.AreValueAndPrioritySame = False
+    This.BufferSize = BUFFER_SIZE
+    Erase This.Container
     
 End Sub
 
@@ -120,20 +120,20 @@ Private Sub IHeap_FromVector(ByVal ItemVector As Variant, Optional ByVal Priorit
     ' Where as if you add then: [17, 18, 29, 20, 42, 54, 100, 90, 82, 79]
     ' so index 2-6 has different order.
     
-    this.ItemCount = UBound(ItemVector) - LBound(ItemVector) + 1
-    ReDim this.Container(this.InsertionRowIndex To this.PriorityRowIndex, 1 To this.ItemCount)
+    This.ItemCount = UBound(ItemVector) - LBound(ItemVector) + 1
+    ReDim This.Container(This.InsertionRowIndex To This.PriorityRowIndex, 1 To This.ItemCount)
     
-    If Not this.AreValueAndPrioritySame And IsMissing(PriorityVector) And Not IsObject(ItemVector(LBound(ItemVector))) Then
+    If Not This.AreValueAndPrioritySame And IsMissing(PriorityVector) And Not IsObject(ItemVector(LBound(ItemVector))) Then
         PriorityVector = ItemVector
     End If
     
     Dim Counter As Long
-    For Counter = this.ItemCount To 1 Step -1
+    For Counter = This.ItemCount To 1 Step -1
         
-        this.Container(this.InsertionRowIndex, Counter) = Counter
-        this.Container(this.ValueRowIndex, Counter) = ItemVector(LBound(ItemVector) + Counter - 1)
-        If Not this.AreValueAndPrioritySame Then
-            this.Container(this.PriorityRowIndex, Counter) = PriorityVector(LBound(PriorityVector) + Counter - 1)
+        This.Container(This.InsertionRowIndex, Counter) = Counter
+        This.Container(This.ValueRowIndex, Counter) = ItemVector(LBound(ItemVector) + Counter - 1)
+        If Not This.AreValueAndPrioritySame Then
+            This.Container(This.PriorityRowIndex, Counter) = PriorityVector(LBound(PriorityVector) + Counter - 1)
         End If
         ShiftDown Counter
         
@@ -142,11 +142,11 @@ Private Sub IHeap_FromVector(ByVal ItemVector As Variant, Optional ByVal Priorit
 End Sub
 
 Private Property Get IHeap_IsEmpty() As Boolean
-    IHeap_IsEmpty = (this.ItemCount = 0)
+    IHeap_IsEmpty = (This.ItemCount = 0)
 End Property
 
 Private Property Get IHeap_Count() As Long
-    IHeap_Count = this.ItemCount
+    IHeap_Count = This.ItemCount
 End Property
 
 Private Function IHeap_Sort(ByVal ItemsToSortVector As Variant _
@@ -162,7 +162,7 @@ Private Function IHeap_Sort(ByVal ItemsToSortVector As Variant _
     IHeap_FromVector ItemsToSortVector, PriorityVector
     
     Dim TotalItems As Long
-    TotalItems = this.ItemCount
+    TotalItems = This.ItemCount
     
     Dim Result As Variant
     ReDim Result(1 To TotalItems, 1 To 1)
@@ -201,17 +201,17 @@ Private Property Get IHeap_Values() As Variant
     
     ' This will return the Current order of the heap values.
     
-    If this.ItemCount = 0 Then Exit Property
+    If This.ItemCount = 0 Then Exit Property
     
     Dim Result As Variant
-    ReDim Result(1 To this.ItemCount, 1 To 1)
+    ReDim Result(1 To This.ItemCount, 1 To 1)
     
     Dim Counter As Long
-    For Counter = 1 To this.ItemCount
-        If IsObject(this.Container(this.ValueRowIndex, Counter)) Then
-            Set Result(Counter, 1) = this.Container(this.ValueRowIndex, Counter)
+    For Counter = 1 To This.ItemCount
+        If IsObject(This.Container(This.ValueRowIndex, Counter)) Then
+            Set Result(Counter, 1) = This.Container(This.ValueRowIndex, Counter)
         Else
-            Result(Counter, 1) = this.Container(this.ValueRowIndex, Counter)
+            Result(Counter, 1) = This.Container(This.ValueRowIndex, Counter)
         End If
     Next Counter
     
@@ -223,17 +223,17 @@ Private Property Get IHeap_Priorities() As Variant
     
     ' This will return the Current order of the heap priority.
     
-    If this.ItemCount = 0 Then Exit Property
+    If This.ItemCount = 0 Then Exit Property
     
     Dim Result As Variant
-    ReDim Result(1 To this.ItemCount, 1 To 1)
+    ReDim Result(1 To This.ItemCount, 1 To 1)
     
     Dim Counter As Long
-    For Counter = 1 To this.ItemCount
-        If IsObject(this.Container(this.PriorityRowIndex, Counter)) Then
-            Set Result(Counter, 1) = this.Container(this.PriorityRowIndex, Counter)
+    For Counter = 1 To This.ItemCount
+        If IsObject(This.Container(This.PriorityRowIndex, Counter)) Then
+            Set Result(Counter, 1) = This.Container(This.PriorityRowIndex, Counter)
         Else
-            Result(Counter, 1) = this.Container(this.PriorityRowIndex, Counter)
+            Result(Counter, 1) = This.Container(This.PriorityRowIndex, Counter)
         End If
     Next Counter
     
@@ -248,30 +248,30 @@ Private Sub IHeap_Add(ByVal Value As Variant, Optional ByVal Priority As Variant
     ' It will keep checking each parent node and if parent node has low priority then move down to that children
     ' node position.
     
-    this.ItemCount = this.ItemCount + 1
+    This.ItemCount = This.ItemCount + 1
     
     ExtendContainerSizeIfNeeded
     
-    this.Container(this.InsertionRowIndex, this.ItemCount) = this.ItemCount
+    This.Container(This.InsertionRowIndex, This.ItemCount) = This.ItemCount
     
     If IsObject(Value) Then
-        Set this.Container(this.ValueRowIndex, this.ItemCount) = Value
+        Set This.Container(This.ValueRowIndex, This.ItemCount) = Value
     Else
-        this.Container(this.ValueRowIndex, this.ItemCount) = Value
+        This.Container(This.ValueRowIndex, This.ItemCount) = Value
     End If
     
-    If Not this.AreValueAndPrioritySame Then
+    If Not This.AreValueAndPrioritySame Then
         If IsMissing(Priority) And Not IsObject(Value) Then
-            this.Container(this.PriorityRowIndex, this.ItemCount) = Value
+            This.Container(This.PriorityRowIndex, This.ItemCount) = Value
         Else
-            this.Container(this.PriorityRowIndex, this.ItemCount) = Priority
+            This.Container(This.PriorityRowIndex, This.ItemCount) = Priority
         End If
     End If
     
     ' No need to check for Shiftup
-    If this.ItemCount = 1 Then Exit Sub
+    If This.ItemCount = 1 Then Exit Sub
     
-    ShiftUp this.ItemCount, Int(this.ItemCount / 2)
+    ShiftUp This.ItemCount, Int(This.ItemCount / 2)
     
 End Sub
 
@@ -283,10 +283,10 @@ Private Sub ShiftUp(ByVal ChildIndex As Long, ByVal ParentIndex As Long)
     Do While ParentIndex > 0
         
         Dim ParentPriority As Variant
-        ParentPriority = this.Container(this.PriorityRowIndex, ParentIndex)
+        ParentPriority = This.Container(This.PriorityRowIndex, ParentIndex)
         
         Dim ChildPriority As Variant
-        ChildPriority = this.Container(this.PriorityRowIndex, ChildIndex)
+        ChildPriority = This.Container(This.PriorityRowIndex, ChildIndex)
         
         If IsSecondOneHasLowPriority(ParentIndex, ChildIndex) Then
             Swap ParentIndex, ChildIndex
@@ -303,10 +303,10 @@ End Sub
 Private Function IsSecondOneHasLowPriority(ByVal FirstOneIndex, ByVal SecondOneIndex As Long) As Boolean
     
     Dim FirstOnePriority As Variant
-    FirstOnePriority = this.Container(this.PriorityRowIndex, FirstOneIndex)
+    FirstOnePriority = This.Container(This.PriorityRowIndex, FirstOneIndex)
     
     Dim SecondOnePriority As Variant
-    SecondOnePriority = this.Container(this.PriorityRowIndex, SecondOneIndex)
+    SecondOnePriority = This.Container(This.PriorityRowIndex, SecondOneIndex)
     
     Dim IsLowPriority As Boolean
     IsLowPriority = False
@@ -335,7 +335,7 @@ Private Function IsSecondOneHasLowPriority(ByVal FirstOneIndex, ByVal SecondOneI
     
     If IsEqualPriority Then
         ' Priorities based on insertion order. FIFO idea.
-        IsLowPriority = (this.Container(this.InsertionRowIndex, FirstOneIndex) > this.Container(this.InsertionRowIndex, SecondOneIndex))
+        IsLowPriority = (This.Container(This.InsertionRowIndex, FirstOneIndex) > This.Container(This.InsertionRowIndex, SecondOneIndex))
     End If
     
     IsSecondOneHasLowPriority = IsLowPriority
@@ -345,20 +345,20 @@ End Function
 Private Sub Swap(ByVal ParentIndex As Long, ByVal ChildIndex As Long)
     
     Dim RowIndex As Long
-    For RowIndex = LBound(this.Container, 1) To UBound(this.Container, 1)
+    For RowIndex = LBound(This.Container, 1) To UBound(This.Container, 1)
         
         Dim Temp As Variant
-        If IsObject(this.Container(RowIndex, ParentIndex)) Then
+        If IsObject(This.Container(RowIndex, ParentIndex)) Then
         
-            Set Temp = this.Container(RowIndex, ParentIndex)
-            Set this.Container(RowIndex, ParentIndex) = this.Container(RowIndex, ChildIndex)
-            Set this.Container(RowIndex, ChildIndex) = Temp
+            Set Temp = This.Container(RowIndex, ParentIndex)
+            Set This.Container(RowIndex, ParentIndex) = This.Container(RowIndex, ChildIndex)
+            Set This.Container(RowIndex, ChildIndex) = Temp
     
         Else
     
-            Temp = this.Container(RowIndex, ParentIndex)
-            this.Container(RowIndex, ParentIndex) = this.Container(RowIndex, ChildIndex)
-            this.Container(RowIndex, ChildIndex) = Temp
+            Temp = This.Container(RowIndex, ParentIndex)
+            This.Container(RowIndex, ParentIndex) = This.Container(RowIndex, ChildIndex)
+            This.Container(RowIndex, ChildIndex) = Temp
     
         End If
         
@@ -373,7 +373,7 @@ Private Sub ShiftDown(ByVal ParentIndex As Long)
     ' index and then consider that child as parent index again. Keep doing this for all children node.
     ' Worst time complexity is: O(logn)
     
-    If ParentIndex * 2 > this.ItemCount Then Exit Sub
+    If ParentIndex * 2 > This.ItemCount Then Exit Sub
     
     Dim LowPriorityIndex As Long
     LowPriorityIndex = ParentIndex
@@ -385,7 +385,7 @@ Private Sub ShiftDown(ByVal ParentIndex As Long)
     RightChildIndex = LeftChildIndex + 1
     
     ' Initially LowPriorityIndex is at the parent. Check if Left child has low priority or not
-    If LeftChildIndex <= this.ItemCount Then
+    If LeftChildIndex <= This.ItemCount Then
         
         If IsSecondOneHasLowPriority(LowPriorityIndex, LeftChildIndex) Then
             LowPriorityIndex = LeftChildIndex
@@ -395,7 +395,7 @@ Private Sub ShiftDown(ByVal ParentIndex As Long)
     
     ' If left node has low priority then LowPriorityIndex would have been updated with LeftChildIndex.
     ' Now compare LeftChildIndex with Right one or with parent with right one.
-    If RightChildIndex <= this.ItemCount Then
+    If RightChildIndex <= This.ItemCount Then
         If IsSecondOneHasLowPriority(LowPriorityIndex, RightChildIndex) Then
             LowPriorityIndex = RightChildIndex
         End If
@@ -413,8 +413,8 @@ Private Sub ExtendContainerSizeIfNeeded()
     
     ' Make room for extra items.
     
-    If this.ItemCount > UBound(this.Container, 2) - LBound(this.Container, 2) + 1 Then
-        ReDim Preserve this.Container(this.InsertionRowIndex To this.PriorityRowIndex, 1 To this.ItemCount - 1 + this.BufferSize)
+    If This.ItemCount > UBound(This.Container, 2) - LBound(This.Container, 2) + 1 Then
+        ReDim Preserve This.Container(This.InsertionRowIndex To This.PriorityRowIndex, 1 To This.ItemCount - 1 + This.BufferSize)
     End If
     
 End Sub
@@ -424,21 +424,21 @@ Private Function IHeap_Pop() As Variant
     ' This will remove the largest priority item and then rearrange again.
     ' Time complexity: O(logn)
     
-    If this.ItemCount <= 0 Then
+    If This.ItemCount <= 0 Then
         Err.Raise 91, "Heap is empty."
     End If
     
-    If IsObject(this.Container(this.ValueRowIndex, 1)) Then
-        Set IHeap_Pop = this.Container(this.ValueRowIndex, 1)
+    If IsObject(This.Container(This.ValueRowIndex, 1)) Then
+        Set IHeap_Pop = This.Container(This.ValueRowIndex, 1)
     Else
-        IHeap_Pop = this.Container(this.ValueRowIndex, 1)
+        IHeap_Pop = This.Container(This.ValueRowIndex, 1)
     End If
     
     ' Swap with last item.
-    Swap 1, this.ItemCount
+    Swap 1, This.ItemCount
     
     ' Reduce item count. We have the top element at the backup section.
-    this.ItemCount = this.ItemCount - 1
+    This.ItemCount = This.ItemCount - 1
     
     ' Start shifting down from the root node.
     ShiftDown 1
@@ -449,14 +449,14 @@ End Function
 Private Function IHeap_Top() As Variant
     
     ' This will just show you the top element. It won't remove the item from the top.
-    If this.ItemCount <= 0 Then
+    If This.ItemCount <= 0 Then
         Err.Raise 91, "Heap is empty."
     End If
     
-    If IsObject(this.Container(this.ValueRowIndex, 1)) Then
-        Set IHeap_Top = this.Container(this.ValueRowIndex, 1)
+    If IsObject(This.Container(This.ValueRowIndex, 1)) Then
+        Set IHeap_Top = This.Container(This.ValueRowIndex, 1)
     Else
-        IHeap_Top = this.Container(this.ValueRowIndex, 1)
+        IHeap_Top = This.Container(This.ValueRowIndex, 1)
     End If
     
 End Function

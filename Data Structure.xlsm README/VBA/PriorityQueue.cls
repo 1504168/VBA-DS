@@ -16,52 +16,52 @@ Private Type TPriorityQueue
     Heap As IHeap
 End Type
 
-Private this As TPriorityQueue
+Private This As TPriorityQueue
 
 Public Property Get Heap() As IHeap
-    Set Heap = this.Heap
+    Set Heap = This.Heap
 End Property
 
 Public Property Set Heap(ByVal RHS As IHeap)
-    Set this.Heap = RHS
+    Set This.Heap = RHS
 End Property
 
 Public Property Let BufferSize(ByVal RHS As Long)
-    this.Heap.BufferSize = RHS
+    This.Heap.BufferSize = RHS
 End Property
 
 Public Property Let AreValueAndPrioritySame(ByVal RHS As Boolean)
-    this.Heap.AreValueAndPrioritySame = RHS
+    This.Heap.AreValueAndPrioritySame = RHS
 End Property
 
 Public Property Get IsEmpty() As Boolean
-    IsEmpty = this.Heap.IsEmpty
+    IsEmpty = This.Heap.IsEmpty
 End Property
 
 Public Property Get Count() As Long
-    Count = this.Heap.Count
+    Count = This.Heap.Count
 End Property
 
 Public Sub Add(ByVal Value As Variant, Optional ByVal Priority As Variant)
-    this.Heap.Add Value, Priority
+    This.Heap.Add Value, Priority
 End Sub
 
 Public Function Pop() As Variant
-    Pop = this.Heap.Pop
+    Pop = This.Heap.Pop
 End Function
 
 Public Function Top() As Variant
-    Top = this.Heap.Top
+    Top = This.Heap.Top
 End Function
 
 Public Sub FromVector(ByVal ItemVector As Variant, Optional ByVal PriorityVector As Variant)
-    this.Heap.FromVector ItemVector, PriorityVector
+    This.Heap.FromVector ItemVector, PriorityVector
 End Sub
 
 Public Function Sort(ByVal ItemsToSortVector As Variant _
                      , Optional ByVal PriorityVector As Variant _
                       , Optional ByVal IsAscending As Boolean = True) As Variant
-    Sort = this.Heap.Sort(ItemsToSortVector, PriorityVector, IsAscending)
+    Sort = This.Heap.Sort(ItemsToSortVector, PriorityVector, IsAscending)
 End Function
 
 
@@ -96,21 +96,21 @@ Public Function KLargestElements(ByVal ItemVector As Variant _
         
     End If
     
-    Set this.Heap = New MinHeap
-    this.Heap.BufferSize = K + 1
+    Set This.Heap = New MinHeap
+    This.Heap.BufferSize = K + 1
     
     Dim ValueAndPrioritySame As Boolean
     ValueAndPrioritySame = IsMissing(PriorityVector)
     
-    this.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
+    This.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
     
     Dim Index As Long
     For Index = LBound(ItemVector) To UBound(ItemVector)
         
         AddToHeap ItemVector, PriorityVector, ValueAndPrioritySame, Index
         
-        If this.Heap.Count > K Then
-            this.Heap.Pop
+        If This.Heap.Count > K Then
+            This.Heap.Pop
         End If
         
     Next Index
@@ -120,17 +120,17 @@ Public Function KLargestElements(ByVal ItemVector As Variant _
     
     For Index = 1 To K
         
-        If IsObject(this.Heap.Top) Then
-            Set Result(K - Index + 1) = this.Heap.Pop
+        If IsObject(This.Heap.Top) Then
+            Set Result(K - Index + 1) = This.Heap.Pop
         Else
-            Result(K - Index + 1) = this.Heap.Pop
+            Result(K - Index + 1) = This.Heap.Pop
         End If
         
     Next Index
     
     KLargestElements = Result
     
-    Set this.Heap = Nothing
+    Set This.Heap = Nothing
 
 End Function
 
@@ -164,32 +164,32 @@ Public Function KthLargestElement(ByVal ItemVector As Variant _
         Exit Function
     End If
     
-    Set this.Heap = New MinHeap
-    this.Heap.BufferSize = K + 1
+    Set This.Heap = New MinHeap
+    This.Heap.BufferSize = K + 1
     
     Dim ValueAndPrioritySame As Boolean
     ValueAndPrioritySame = IsMissing(PriorityVector)
     
-    this.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
+    This.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
     
     Dim Index As Long
     For Index = LBound(ItemVector) To UBound(ItemVector)
         
         AddToHeap ItemVector, PriorityVector, ValueAndPrioritySame, Index
         
-        If this.Heap.Count > K Then
-            this.Heap.Pop
+        If This.Heap.Count > K Then
+            This.Heap.Pop
         End If
         
     Next Index
     
-    If IsObject(this.Heap.Top) Then
-       Set KthLargestElement = this.Heap.Top
+    If IsObject(This.Heap.Top) Then
+       Set KthLargestElement = This.Heap.Top
     Else
-        KthLargestElement = this.Heap.Top
+        KthLargestElement = This.Heap.Top
     End If
     
-    Set this.Heap = Nothing
+    Set This.Heap = Nothing
 
 End Function
 
@@ -224,21 +224,21 @@ Public Function KSmallestElements(ByVal ItemVector As Variant _
         
     End If
     
-    Set this.Heap = New MaxHeap
-    this.Heap.BufferSize = K + 1
+    Set This.Heap = New MaxHeap
+    This.Heap.BufferSize = K + 1
     
     Dim ValueAndPrioritySame As Boolean
     ValueAndPrioritySame = IsMissing(PriorityVector)
     
-    this.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
+    This.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
     
     Dim Index As Long
     For Index = LBound(ItemVector) To UBound(ItemVector)
         
         AddToHeap ItemVector, PriorityVector, ValueAndPrioritySame, Index
         
-        If this.Heap.Count > K Then
-            this.Heap.Pop
+        If This.Heap.Count > K Then
+            This.Heap.Pop
         End If
         
     Next Index
@@ -248,17 +248,17 @@ Public Function KSmallestElements(ByVal ItemVector As Variant _
     
     For Index = 1 To K
         
-        If IsObject(this.Heap.Top) Then
-            Set Result(K - Index + 1) = this.Heap.Pop
+        If IsObject(This.Heap.Top) Then
+            Set Result(K - Index + 1) = This.Heap.Pop
         Else
-            Result(K - Index + 1) = this.Heap.Pop
+            Result(K - Index + 1) = This.Heap.Pop
         End If
         
     Next Index
     
     KSmallestElements = Result
     
-    Set this.Heap = Nothing
+    Set This.Heap = Nothing
 
 End Function
 
@@ -294,42 +294,42 @@ Public Function KthSmallestElement(ByVal ItemVector As Variant _
         
     End If
     
-    Set this.Heap = New MaxHeap
-    this.Heap.BufferSize = K + 1
+    Set This.Heap = New MaxHeap
+    This.Heap.BufferSize = K + 1
     
     Dim ValueAndPrioritySame As Boolean
     ValueAndPrioritySame = IsMissing(PriorityVector)
     
-    this.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
+    This.Heap.AreValueAndPrioritySame = ValueAndPrioritySame
     
     Dim Index As Long
     For Index = LBound(ItemVector) To UBound(ItemVector)
         
         AddToHeap ItemVector, PriorityVector, ValueAndPrioritySame, Index
         
-        If this.Heap.Count > K Then
-            this.Heap.Pop
+        If This.Heap.Count > K Then
+            This.Heap.Pop
         End If
         
     Next Index
     
-    If IsObject(this.Heap.Top) Then
-        Set KthSmallestElement = this.Heap.Top
+    If IsObject(This.Heap.Top) Then
+        Set KthSmallestElement = This.Heap.Top
     Else
-        KthSmallestElement = this.Heap.Top
+        KthSmallestElement = This.Heap.Top
     End If
     
-    Set this.Heap = Nothing
+    Set This.Heap = Nothing
 
 End Function
 
 
 Private Sub Class_Initialize()
-    Set this.Heap = New MaxHeap
+    Set This.Heap = New MaxHeap
 End Sub
 
 Private Sub Class_Terminate()
-    Set this.Heap = Nothing
+    Set This.Heap = Nothing
 End Sub
 
 
@@ -343,9 +343,9 @@ Private Sub AddToHeap(ByVal ItemVector As Variant _
                         , ByVal Index As Long)
     
     If ValueAndPrioritySame Then
-        this.Heap.Add ItemVector(Index)
+        This.Heap.Add ItemVector(Index)
     Else
-        this.Heap.Add ItemVector(Index), PriorityVector(Index)
+        This.Heap.Add ItemVector(Index), PriorityVector(Index)
     End If
         
 End Sub
